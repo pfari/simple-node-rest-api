@@ -2,9 +2,10 @@
   "name": "simple-node-rest-api",
   "version": "1.0.0",
   "description": "This is a simple project to try out to build REST APIs with node.js and dockerize them",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "set NODE_ENV=dev && node server.js",
+    "test": "mocha --timeout 10000"
   },
   "author": "Paolo Farinella",
   "license": "ISC",
@@ -16,9 +17,16 @@
     "node,javascript,rest,api,docker"
   ],
   "dependencies": {
-    "chai": "^4.0.2",
+    "body-parser": "^1.17.2",
+    "config": "^1.26.1",
     "express": "^4.15.3",
-    "mocha": "^3.4.2",
-    "mongoose": "^4.10.6"
+    "log4js": "^1.1.1",
+    "mongoose": "^4.10.6",
+    "morgan": "^1.8.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "mocha": "^2.4.5"
   }
 }
