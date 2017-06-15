@@ -1,7 +1,7 @@
 FROM node:boron
 
 # Create app directory
-RIM mkdir -p /usr/src/app
+RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Install app dependencies
