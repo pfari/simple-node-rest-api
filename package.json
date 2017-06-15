@@ -1,0 +1,22 @@
+{
+  "name": "simple-node-rest-api",
+  "version": "1.0.0",
+  "description": "This is a simple project to try out to build REST APIs with node.js and dockerize them",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Paolo Farinella",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pfari/simple-node-rest-api.git"
+  },
+  "keywords": [
+    "node,javascript,rest,api,docker"
+  ],
+  "dependencies": {
+    "express": "^4.15.3",
+    "mocha": "^3.4.2"
+  }
+}
