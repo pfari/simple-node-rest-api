@@ -1,7 +1,6 @@
-// Setting up logger
-let log4js = require( "log4js" );
-log4js.configure( "./config/log4js.json" );
-let logger = log4js.getLogger( "file-appender" );
+//let log4js = require( "log4js" );
+//log4js.configure( "./config/log4js.json" );
+let logger = console;//log4js.getLogger("file-appender");
 let express = require('express');
 let app = express();
 let mongoose = require('mongoose');
@@ -18,7 +17,15 @@ let options = {
 //db connection
 mongoose.connect(config.DBHost, options);
 let db = mongoose.connection;
-db.on('error', logger.error.bind(console, 'connection error:'));
+db.on('connected', console.log.bind(console, 'Connection DB established.'));
+db.on('error', console.error.bind(console, 'Connection DB error:'));
+db.on('disconnected', console.error.bind(console, 'connection error:'));
+process.on('SIGINT', function() {
+  db.close(function () {
+    console.log('Mongoose default connection disconnected through app termination');
+    process.exit(0);
+  });
+});
 
 //don't show the log when it is test
 if(config.util.getEnv('NODE_ENV') !== 'test') {

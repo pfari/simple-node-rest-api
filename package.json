@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "set NODE_ENV=dev && node server.js",
-    "test": "mocha --timeout 10000"
+    "test": "mocha --timeout 1000"
   },
   "author": "Paolo Farinella",
   "license": "ISC",
