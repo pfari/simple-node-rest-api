@@ -23,9 +23,15 @@ if(config.util.getEnv('NODE_ENV') !== 'test') {
 //db connection
 mongoose.connect(config.DBHost, options);
 let db = mongoose.connection;
-db.on('connected', logger.info.bind(logger, 'Connection DB established.'));
-db.on('error', logger.error.bind(logger, 'Connection DB error:'));
-db.on('disconnected', logger.error.bind(logger, 'connection error:'));
+db.on('connected', function() {
+    logger.error('Connection to DB established.');
+  });
+db.on('error', function(err) {
+    logger.error('Connection DB error:' + err);
+  });
+db.on('disconnected', function(msg) {
+    logger.error('Disconnected from DB.');
+  });
 process.on('SIGINT', function() {
   db.close(function () {
     logger.info('Mongoose default connection disconnected through app termination');
