@@ -1,7 +1,6 @@
 // Modules
 let log4js = require( "log4js" );
 let express = require('express');
-let morgan = require('morgan');
 let mongoose = require('mongoose');
 let bodyParser = require('body-parser');
 let config = require('config');
@@ -20,11 +19,10 @@ let options = {
 
 //Diable log service when testing or will interfere with Mocha output
 if(config.util.getEnv('NODE_ENV') !== 'test') {
-  log4js.configure( "./log4js.json" );
+  log4js.configure( "./config/log4js.json" );
   logger = log4js.getLogger("file-appender");
 
-  // TODO - fix this because morgan is loggin to the console
-  app.use(morgan('combined')); // Apache 2 log style
+  app.use(log4js.connectLogger(logger));
 }
 
 //DB connection

@@ -21,8 +21,7 @@
     "config": "^1.26.1",
     "express": "^4.15.3",
     "log4js": "^1.1.1",
-    "mongoose": "^4.10.6",
-    "morgan": "^1.8.2"
+    "mongoose": "^4.10.6"
   },
   "devDependencies": {
     "chai": "^3.5.0",
