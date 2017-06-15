@@ -1,40 +1,45 @@
+// Modules
 let log4js = require( "log4js" );
-let logger = console;
 let express = require('express');
 let morgan = require('morgan');
-let app = express();
 let mongoose = require('mongoose');
 let bodyParser = require('body-parser');
-let port = 8080;
-let book = require('./app/routes/book');
 let config = require('config');
+
+// Internal modules
+let book = require('./app/routes/book');
+let logger = console;  // console is default logger
+
+// Config
+let app = express();
+let port = config.webServer.port;
 let options = {
-                server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
-                replset: { socketOptions: { keepAlive: 1, connectTimeoutMS : 30000 } }
+                server: { socketOptions: { keepAlive: config.DB.serverKeepAlive, connectTimeoutMS: config.DB.serverConnectTimeoutMS } },
+                replset: { socketOptions: { keepAlive: config.DB.replsetKeepAlive, connectTimeoutMS : config.DB.replsetConnectTimeoutMS } }
               };
 
-//Replace log4js with console when it is testing or will interfere with Mocha output
+//Diable log service when testing or will interfere with Mocha output
 if(config.util.getEnv('NODE_ENV') !== 'test') {
-  log4js.configure( "./config/log4js.json" );
+  log4js.configure( "./log4js.json" );
   logger = log4js.getLogger("file-appender");
-  app.use(morgan('combined'));
+
+  // TODO - fix this because morgan is loggin to the console
+  app.use(morgan('combined')); // Apache 2 log style
 }
 
-//db connection
-mongoose.connect(config.DBHost, options);
+//DB connection
+mongoose.connect(config.DB.host, options);
 let db = mongoose.connection;
 db.on('connected', function() {
-    logger.error('Connection to DB established.');
+    logger.info('Connection to DB established.');
   });
 db.on('error', function(err) {
     logger.error('Connection DB error:' + err);
-  });
-db.on('disconnected', function(msg) {
-    logger.error('Disconnected from DB.');
+    process.exit(0);
   });
 process.on('SIGINT', function() {
   db.close(function () {
-    logger.info('Mongoose default connection disconnected through app termination');
+    logger.info('SIGINT event received, closing DB connection.');
     process.exit(0);
   });
 });
@@ -45,6 +50,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json'}));
 
+// Routing
 app.get("/", (req, res) => res.json({message: "Welcome to our Bookstore!"}));
 
 app.route("/book")
@@ -55,6 +61,7 @@ app.route("/book/:id")
     .delete(book.deleteBook)
     .put(book.updateBook);
 
+// Start server
 app.listen(port);
 logger.info("Listening on port " + port);
 

@@ -1,3 +1,12 @@
 {
-    "DBHost": "localhost:27017"
+    "DB" : {
+      "host":"localhost:27017",
+      "serverKeepAlive":1,
+      "serverConnectTimeoutMS":30000,
+      "replsetKeepAlive":1,
+      "replsetConnectTimeoutMS":30000
+    },
+    "webServer" : {
+      "port":8080
+    }
 }
