@@ -1,24 +1,39 @@
 # simple-node-rest-api
-This is a simple project to try out to build REST APIs with node.js and dockerize them
+Simple project of dockerized REST service implemented with node.js and express.
 
-Ref: https://scotch.io/tutorials/test-a-node-restful-api-with-mocha-and-chai
+## App
+### Installing Dependencies
+```shell
+$ npm install
+```
+### Running Tests
+```shell
+$ npm test
+```
+### Run the App
+```shell
+$ npm start
+```
+The app will be running on http://localhost:8080
 
-
-#Dockerize the app
+## Docker
+### Dockerize the app
+```shell
 $ docker build -t pfari/simple-node-rest-api .
-
-#Run the image
+```
+### Run the image
+```shell
 $ docker run -p 49160:8080 -d pfari/simple-node-rest-api
-
-# Get container ID
+```
+### Get container ID
+```shell
 $ docker ps
-
-# Print app output
+```
+### Print app output
+```shell
 $ docker logs <container id>
-
-# Example
-Running on http://localhost:8080
-If you need to go inside the container you can use the exec command:
-
-# Enter the container
+```
+### Enter the container
+```shell
 $ docker exec -it <container id> /bin/bash
+```
