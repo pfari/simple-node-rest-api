@@ -1,6 +1,9 @@
 # simple-node-rest-api
 Simple project of dockerized REST service implemented with node.js and express.
 
+## Requirements
+An instance of MongoDB running, to be configured in config/default.js.
+
 ## App
 ### Installing Dependencies
 ```shell
